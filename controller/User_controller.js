@@ -42,7 +42,12 @@ export const generateotp = async (req, res,next) => {
         { otp: hashotp, createdAt: new Date() },
         { upsert: true, new: true }
       );
-     await otpsender(phone,otp,res,next)
+      return res.json({
+        success: true,
+        message: "OTP sent successfully",
+        otp:otp
+      })
+    //  await otpsender(phone,otp,res,next)
     } catch (error) {
       console.log(error?.response?.data || error.message || error);
       return next(new ErrorHandler(error.message,500,false))
